@@ -1,0 +1,38 @@
+figure{
+  margin: 0
+}
+
+.card-container{
+  display: grid;
+  grid-template-columns: repeat(3, 224px);
+  grid-template-rows: repeat(3, 224px);
+}
+
+figure{
+  height: 196px;
+  width: 196px;
+  /*Center a figure within its grid cell*/
+  place-self: center;
+  
+  display: flex;
+  flex-flow: column nowrap;
+  /*Center the items contained within a figure*/
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.card-image{
+  height: 128px;
+  width: 128px;
+  margin-top: auto
+}
+
+figcaption{
+  margin-bottom: auto;
+  word-wrap: break-word;
+}
+
+.clicked{
+  border: thin solid red
+}
