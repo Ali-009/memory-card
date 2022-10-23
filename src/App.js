@@ -19,7 +19,7 @@ function GameCard({image, characterName, isCardClicked, clickCard, clickCount, s
       clickCard(true)
       setClickCount(clickCount + 1)
     } else {
-      setGameResult('Oops, you\'ve lost! You clicked ' + characterName + ' twice! '+'Your score is ' + clickCount)
+      //setGameResult('Oops, you\'ve lost! You clicked ' + characterName + ' twice! '+'Your score is ' + clickCount)
     }
   }
   let clickedStyle = ''
@@ -80,7 +80,7 @@ function App() {
     'Woody',
   ]
 
-  //The state object of the GameCard components is lost when the app randomizes its positions in the React DOM
+  //The state object of the GameCard components is lost when the app randomizes its position in the React DOM
   //This why its best to store the state of GameCard components in the App component,
   //as its position is never changed in the React DOM
   const [batmanClicked, setBatmanClicked] = useState(false)
@@ -121,51 +121,38 @@ function App() {
   const [clickCount, setClickCount] = useState(0)
   const [gameResult, setGameResult] = useState('')
 
-  if(clickCount === cardImages.length){
-    setGameResult('Congratulations! You\'ve won!')
-    setClickCount(0)
-  }
-
-  //conditionally render either the gameBoard or gameResultDisplay
-  let gameBoard = null
-  let gameResultDisplay = null
-  if(!gameResult){
-    const GameCardGrid = cardImages.map((image, index) => {
-      return (
-        <GameCard key={uniqid()} image={image} characterName={characterNames[index]}
-        isCardClicked={isCardClicked[index]} clickCard={clickCard[index]} 
-        clickCount={clickCount} setClickCount={setClickCount}
-        setGameResult={setGameResult}/>
-      ) 
-    })
-    gameBoard = (
-      <div className="App">
-        <h1>Memory Game</h1>
-        <p>Click Count: {clickCount}</p>
-        <div className="card-container">
-          {randomizeArray(GameCardGrid)}
-        </div>
-      </div>
-    ) 
-  } else {
-    const resetGameState = (e) => {
-      setGameResult('')
-      for(let i = 0; i < clickCard.length; i++){
-        clickCard[i](false)
-      }
-      setClickCount(0)
-    }
-    gameResultDisplay = (
-      <div>
-        {gameResult}
-        <button onClick={resetGameState}>Play Again</button>
-      </div>
+  const GameCardGrid = cardImages.map((cardImage, index) => {
+    return (
+      <GameCard key={uniqid()} image={cardImage} characterName={characterNames[index]}
+      isCardClicked={isCardClicked[index]} clickCard={clickCard[index]} 
+      clickCount={clickCount} setClickCount={setClickCount}/>
     )
-  }
+  })
+
+  const [randomGrid, setRandomGrid] = useState(GameCardGrid)
+
+  //Randomize Grid on mount
+  useEffect(() => {
+    //To make use of effects, we need them to change state variables
+    //Otherwise the effects won't cause a re-render
+    setRandomGrid(randomizeArray(GameCardGrid))
+  }, [])
+
+  //Randomize Grid when the clickCount is incremented
+  //This won't cause an infinite loop, as the effect is only applied on the condition that clickCount chnages
+  useEffect(() => {
+    setRandomGrid(randomizeArray(GameCardGrid))
+  }, [clickCount])
   
 
   return (
-    gameBoard || gameResultDisplay
+    <div className="App">
+      <h1>Memory Game</h1>
+      <p>Click Count: {clickCount}</p>
+      <div className="card-container">
+        {randomGrid}
+      </div>
+  </div>
   );
 }
 
