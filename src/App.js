@@ -14,18 +14,19 @@ import uniqid from 'uniqid'
 
 function GameCard(props){
 
-  const {image, characterName, isCardClicked, clickCard} = props
+  const {image, characterName, isCardClicked, setIsCardClicked} = props
   const {clickCount, setClickCount, gameOver, setGameOver, setGameResult} = props
 
   const handleClick = (event) => {
     if(!isCardClicked && !gameOver){
-      clickCard(true)
+      setIsCardClicked(true)
       setClickCount(clickCount + 1)
     } else if(!gameOver){
       setGameOver(true)
       setGameResult('Oops, you\'ve lost! You clicked ' + characterName + ' twice! '+'Your score is ' + clickCount)
     }
   }
+
   let clickedStyle = ''
   isCardClicked ? clickedStyle = 'clicked' : clickedStyle = ''
   return (
@@ -110,7 +111,7 @@ function App() {
     woodyClicked,
   ]
 
-  const clickCard = [
+  const setIsCardClicked = [
     setBatmanClicked,
     setCourageClicked,
     setDaffyClicked,
@@ -126,17 +127,16 @@ function App() {
   const [gameOver, setGameOver] = useState(false)
   const [gameResult, setGameResult] = useState('')
   
-  //randomize the array on re-render
-  let GameCardGrid = cardImages.map((cardImage, index) => {
+  const GameCardGrid = cardImages.map((cardImage, index) => {
     return (
       <GameCard key={uniqid()} image={cardImage} characterName={characterNames[index]}
-      isCardClicked={isCardClicked[index]} clickCard={clickCard[index]} 
+      isCardClicked={isCardClicked[index]} setIsCardClicked={setIsCardClicked[index]} 
       clickCount={clickCount} setClickCount={setClickCount}
       gameOver={gameOver} setGameOver={setGameOver}
       setGameResult={setGameResult}/>
     )
   })
-
+  
   const [randomGrid, setRandomGrid] = useState(GameCardGrid)
 
   //Randomize Grid on mount
@@ -157,9 +157,11 @@ function App() {
         setRandomGrid(randomizeArray(GameCardGrid))
       }
     }
-    
   }, [clickCount])
   
+  useEffect(() => {
+    setRandomGrid(randomizeArray(GameCardGrid))
+  }, [gameOver])
 
   return (
     <div className="App">
