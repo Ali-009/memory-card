@@ -180,7 +180,7 @@ function App() {
       <div className="card-container">
         {randomGrid}
       </div>
-      {gameOver && <button onClick={handleGameReset}>Play Again</button>}
+      {gameOver && <button className='game-reset-button' onClick={handleGameReset}>Play Again</button>}
   </div>
   );
 }
