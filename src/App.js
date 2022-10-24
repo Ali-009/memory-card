@@ -12,14 +12,18 @@ import woody from './images/woody.jpg'
 import {useState, useEffect} from 'react'
 import uniqid from 'uniqid'
 
-function GameCard({image, characterName, isCardClicked, clickCard, clickCount, setClickCount, setGameResult}){
+function GameCard(props){
+
+  const {image, characterName, isCardClicked, clickCard} = props
+  const {clickCount, setClickCount, gameOver, setGameOver, setGameResult} = props
 
   const handleClick = (event) => {
-    if(!isCardClicked){
+    if(!isCardClicked && !gameOver){
       clickCard(true)
       setClickCount(clickCount + 1)
-    } else {
-      //setGameResult('Oops, you\'ve lost! You clicked ' + characterName + ' twice! '+'Your score is ' + clickCount)
+    } else if(!gameOver){
+      setGameOver(true)
+      setGameResult('Oops, you\'ve lost! You clicked ' + characterName + ' twice! '+'Your score is ' + clickCount)
     }
   }
   let clickedStyle = ''
@@ -119,13 +123,17 @@ function App() {
   ]
 
   const [clickCount, setClickCount] = useState(0)
+  const [gameOver, setGameOver] = useState(false)
   const [gameResult, setGameResult] = useState('')
-
-  const GameCardGrid = cardImages.map((cardImage, index) => {
+  
+  //randomize the array on re-render
+  let GameCardGrid = cardImages.map((cardImage, index) => {
     return (
       <GameCard key={uniqid()} image={cardImage} characterName={characterNames[index]}
       isCardClicked={isCardClicked[index]} clickCard={clickCard[index]} 
-      clickCount={clickCount} setClickCount={setClickCount}/>
+      clickCount={clickCount} setClickCount={setClickCount}
+      gameOver={gameOver} setGameOver={setGameOver}
+      setGameResult={setGameResult}/>
     )
   })
 
@@ -141,7 +149,15 @@ function App() {
   //Randomize Grid when the clickCount is incremented
   //This won't cause an infinite loop, as the effect is only applied on the condition that clickCount chnages
   useEffect(() => {
-    setRandomGrid(randomizeArray(GameCardGrid))
+    if(!gameOver){
+      if(clickCount === characterNames.length){
+        setGameOver(true)
+        setGameResult('Congratulations! You\'ve won!')
+      } else {
+        setRandomGrid(randomizeArray(GameCardGrid))
+      }
+    }
+    
   }, [clickCount])
   
 
@@ -149,6 +165,7 @@ function App() {
     <div className="App">
       <h1>Memory Game</h1>
       <p>Click Count: {clickCount}</p>
+      <p>{gameResult}</p>
       <div className="card-container">
         {randomGrid}
       </div>
