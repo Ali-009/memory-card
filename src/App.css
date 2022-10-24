@@ -1,16 +1,30 @@
+
+html, body{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.App{
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
 figure{
   margin: 0
 }
 
 .card-container{
   display: grid;
-  grid-template-columns: repeat(3, 224px);
-  grid-template-rows: repeat(3, 224px);
+  grid-template-columns: repeat(3, 164px);
+  grid-template-rows: repeat(3, 164px);
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 figure{
-  height: 196px;
-  width: 196px;
   /*Center a figure within its grid cell*/
   place-self: center;
   
@@ -19,20 +33,32 @@ figure{
   /*Center the items contained within a figure*/
   align-items: center;
   justify-content: center;
+
+  cursor: pointer;
   
 }
 
 .card-image{
   height: 128px;
   width: 128px;
-  margin-top: auto
+  margin-top: auto;
+  border-radius: 12px;
 }
 
 figcaption{
   margin-bottom: auto;
   word-wrap: break-word;
-}
 
-.losing-card{
-  border: thin solid red
+  width: 100%;
+  text-align: center;
+  color: white;
+  background-color: #222;
+  margin-top: -20px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+
+  font-family: sans-serif;
+  font-style: italic;
+
+  cursor: pointer;
 }

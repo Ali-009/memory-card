@@ -2,7 +2,7 @@ import './App.css';
 import batman from './images/batman.jpg'
 import courage from './images/courage.jpg'
 import daffy from './images/daffy-duck.jpg'
-import dexter from './images/dexter.jpeg'
+import dexter from './images/dexter.jpg'
 import jerry from './images/jerry.jpg'
 import johnny from './images/johnny-bravo.jpg'
 import scooby from './images/scooby.jpg'
@@ -175,12 +175,12 @@ function App() {
   return (
     <div className="App">
       <h1>Memory Game</h1>
-      <p>Click Count: {clickCount}</p>
-      <p>{gameResult}</p>
+      {!gameOver && <p className='click-count'>Click Count: {clickCount}</p>}
+      {gameOver && <p className='game-result'>{gameResult}</p>}
       <div className="card-container">
         {randomGrid}
-        <button onClick={handleGameReset}>Play Again</button>
       </div>
+      {gameOver && <button onClick={handleGameReset}>Play Again</button>}
   </div>
   );
 }
