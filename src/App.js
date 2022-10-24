@@ -27,10 +27,8 @@ function GameCard(props){
     }
   }
 
-  let clickedStyle = ''
-  isCardClicked ? clickedStyle = 'clicked' : clickedStyle = ''
   return (
-    <figure onClick={handleClick} className={'card ' + clickedStyle}>
+    <figure onClick={handleClick} className='card'>
       <img className={'card-image'} src={image} alt={characterName} />
       <figcaption>{characterName}</figcaption>
     </figure>
@@ -163,6 +161,17 @@ function App() {
     setRandomGrid(randomizeArray(GameCardGrid))
   }, [gameOver])
 
+  const handleGameReset = (e) => {
+    setGameOver(false)
+    setClickCount(0)
+    //Make all the cards not clicked
+    for(let i = 0; i < setIsCardClicked.length; i++){
+      setIsCardClicked[i](false)
+    }
+    setGameResult('')
+    setRandomGrid(randomizeArray(GameCardGrid))
+  }
+
   return (
     <div className="App">
       <h1>Memory Game</h1>
@@ -170,6 +179,7 @@ function App() {
       <p>{gameResult}</p>
       <div className="card-container">
         {randomGrid}
+        <button onClick={handleGameReset}>Play Again</button>
       </div>
   </div>
   );
