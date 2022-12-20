@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/memory-card/static/css/main.68398754.css",
+    "main.js": "/memory-card/static/js/main.4f22f979.js",
+    "static/media/scooby.jpg": "/memory-card/static/media/scooby.c6479a6cafc2fbf5b396.jpg",
+    "static/media/courage.jpg": "/memory-card/static/media/courage.c9cbc10be27633ef3593.jpg",
+    "static/media/daffy-duck.jpg": "/memory-card/static/media/daffy-duck.85ccb4d18054fc26d8ca.jpg",
+    "static/media/dexter.jpg": "/memory-card/static/media/dexter.b18a22a6073d96a10026.jpg",
+    "static/media/johnny-bravo.jpg": "/memory-card/static/media/johnny-bravo.9f209642f785eebbd307.jpg",
+    "static/media/spider-man.jpg": "/memory-card/static/media/spider-man.6f3fd36344cb3df0a7da.jpg",
+    "index.html": "/memory-card/index.html",
+    "main.68398754.css.map": "/memory-card/static/css/main.68398754.css.map",
+    "main.4f22f979.js.map": "/memory-card/static/js/main.4f22f979.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.68398754.css",
+    "static/js/main.4f22f979.js"
+  ]
+}
