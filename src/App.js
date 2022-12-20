@@ -9,24 +9,22 @@ function App() {
     const [gameOverCard, setGameOverCard] = useState('')
     const [clickCount, setClickCount] = useState(0)
 
-    let gameResult = ''
-
-    if(clickCount === cardArray.length){
-        setGameOver(true)
-        gameResult = 'Congratulations You\'ve won!'
-    } else if (gameOver && clickCount < cardArray.length){
-        gameResult = `Oops, you've lost! You clicked ${gameOverCard} twice! Your score is ${clickCount}`
-    }
-
     function handlePlayAgain(e){
         window.location.reload()
+    }
+
+    if(!gameOver && clickCount === cardArray.length){
+        setGameOver(true)
     }
 
     return (
         <div className="App">
           <h1>Memory Game</h1>
           {!gameOver && <p className='click-count'>Click Count: {clickCount}</p>}
-          {gameResult}
+          {clickCount === cardArray.length
+          && <p>Congratulations You've won!</p>}
+          {gameOver && clickCount < cardArray.length
+          && <p>{`Oops, you've lost! You clicked ${gameOverCard} twice! Your score is ${clickCount}`}</p>}
           <div className="card-container">
             <RandomGrid gameOver={gameOver} setGameOver={setGameOver}
             setClickCount={setClickCount} gameOverCard={gameOverCard}
