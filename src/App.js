@@ -15,7 +15,7 @@ function App() {
         setGameOver(true)
         gameResult = 'Congratulations You\'ve won!'
     } else if (gameOver && clickCount < cardArray.length){
-        gameResult = `Oops, you\'ve lost! You clicked ${gameOverCard} twice! Your score is ${clickCount}`
+        gameResult = `Oops, you've lost! You clicked ${gameOverCard} twice! Your score is ${clickCount}`
     }
 
     function handlePlayAgain(e){
